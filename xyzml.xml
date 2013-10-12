@@ -1,0 +1,83 @@
+<?xml version="1.0" ?> 
+<project name="JenkinsDemo" default="war">
+<!-- 	<path id="testNGRun">
+			<pathelement location="/Users/pavang/Documents/workspace/JenkinsDemo/testng-6.8.jar"/>
+			<pathelement location="/Users/pavang/Documents/workspace/JenkinsDemo/build" />
+	</path>
+			
+    <taskdef name="testng" classpathref="testNGRun" classname="org.testng.TestNGAntTask" />   
+    
+     <taskdef name="testng" classname="org.testng.TestNGAntTask">
+	    <classpath>
+	      <pathelement location="lib/testng/testng-5.14.7.jar"/>
+	    </classpath>
+	  </taskdef>
+	  
+	  
+	  <taskdef name="testngtasks" resource="testngtasks" >
+	     <classpath>
+	          <pathelement path="/Users/pavang/Documents/workspace/JenkinsDemo/testng.jar"/>
+	     </classpath>
+	</taskdef>
+	
+	
+	  resource="testngtasks"
+    -->
+
+	
+	<fileset dir="lib">
+	    <include name="**/*.jar"/>
+	</fileset>
+
+    <path id="classpath.test">
+    <!--    <pathelement path="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/"/> 
+        <pathelement path="${toString:testng.classpath}" /> -->                      
+	  <!--  <pathelement path="/Users/pavang/Documents/workspace/JenkinsDemo/testng.jar"/>-->
+	   <!-- <pathelement path="${classes.dir}"/> -->
+    	<pathelement location="/home/vinod_doshi/Projects/testng/testng-6.8/testng-6.8.jar"/>
+    	<pathelement location="/home/vinod_doshi/Projects/jenkins_demo/JenkinsDemo/build/classes"/>
+    </path>
+	
+	
+	<taskdef name="testng" classname="org.testng.TestNGAntTask">
+	        <classpath>
+	        	<pathelement path="/home/vinod_doshi/Projects/testng/testng-6.8/testng-6.8.jar"/>
+	        </classpath>
+	 </taskdef>
+	
+	        	
+	
+<!-- _________________________________________________________________________________ -->	 
+	
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="compile" depends="init" >
+		<javac destdir="build/classes" debug="true" srcdir="src">
+			<classpath refid="classpath.test"/>
+		</javac>
+	</target>
+	
+	<target name="war" depends="compile">
+		<war destfile="dist/JenkinsDemo.war" needxmlfile='false'>
+			<fileset dir="WebContent"/>
+			<lib dir="WebContent/WEB-INF/lib"/>
+			<classes dir="build/classes"/>  
+		</war>
+	</target>
+	
+	<target name="clean">
+		<delete dir="dist" />
+		<delete dir="build" />
+	</target>
+		
+	
+	<target name="runGuiTest" depends="war">	
+		<testng classpathref="classpath.test">
+			<xmlfileset dir="." includes="testng.xml"/>
+		</testng>
+	</target>
+	
+</project>
