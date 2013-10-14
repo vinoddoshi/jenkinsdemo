@@ -6,13 +6,16 @@
 		<classes>
 			<class name="com.jenkins.test.UserDelegateTest">
 				<methods>
-					<include name="saveUsersTest" />
-					<include name="anotherTest" />
+					<include name="saveUserNameTest" />
+					<include name="saveUserPhoneNoTest" />
+					<include name="saveUserEmailID" />
+					<include name="saveUserCountry" />
 				</methods>
 			</class>
 		</classes>
 	</test>
 	
+	<!--  
 	<test name="SeleniumTests" preserve-order="false">
 		<classes>
 			<class name="com.jenkins.guiTest.Index">
@@ -24,6 +27,6 @@
 			</class>
 		</classes>
 	</test>
-	  
+ 	-->  
 </suite>
 

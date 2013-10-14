@@ -1,0 +1,168 @@
+<?xml version="1.0" ?> 
+<project name="JenkinsDemo" default="war">
+
+	<property file="build.properties" />
+	
+	<path id="classpath.test">
+	       <fileset dir="lib">
+	         <include name="SeleniumJars/*.jar" />
+	      </fileset>
+	      <pathelement location="test" />
+	      <pathelement location="src" />
+	      <pathelement location="/home/vinod_doshi/jenkins_demo/JenkinsDemo/testng-6.8.jar"/> 
+	      <pathelement location="/home/vinod_doshi/jenkins_demo/JenkinsDemo/build/classes"/>
+
+	</path>
+
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura*.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+				
+	<taskdef name="testng" classname="org.testng.TestNGAntTask">
+		    <classpath>
+		      <pathelement location="/home/vinod_doshi/jenkins_demo/JenkinsDemo/testng-6.8.jar"/> 
+		    </classpath>
+	</taskdef>
+	
+	 <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+	
+<!-- _________________________________________________________________________________ -->	 
+	
+
+	
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="compile" depends="init" >
+		<javac destdir="build/classes" debug="true" srcdir="src">
+			<classpath refid="classpath.test"/>
+		</javac>
+	</target>
+	
+	<target name="instrument" depends="init,compile">
+			<!--
+				Remove the coverage data file and any old instrumentation.
+			-->
+			<delete file="cobertura.ser"/>
+			<delete dir="${instrumented.dir}" />
+
+			<!--
+				Instrument the application classes, writing the
+				instrumented classes into ${build.instrumented.dir}.
+			-->
+			<cobertura-instrument todir="${instrumented.dir}">
+				<!--
+					The following line causes instrument to ignore any
+					source line containing a reference to log4j, for the
+					purposes of coverage reporting.
+				-->
+				<ignore regex="org.apache.log4j.*" />
+
+				<fileset dir="${classes.dir}">
+					<!--
+						Instrument all the application classes, but
+						don't instrument the test classes.
+					-->
+					<include name="**/*.class" />
+					<exclude name="**/*Test.class" />
+				</fileset>
+			</cobertura-instrument>
+		</target>
+
+	<target name="war" depends="compile">
+		<war destfile="dist/JenkinsDemo.war" needxmlfile='false'>
+			<fileset dir="WebContent"/>
+			<lib dir="WebContent/WEB-INF/lib"/>
+			<classes dir="build/classes"/>  
+		</war>
+	</target>
+	
+	<target name="clean">
+		<delete dir="dist" />
+		<delete dir="build" />
+	</target>
+		
+	
+	<target name="runTest" depends="war">
+				<testng classpathref="classpath.test">
+					<xmlfileset dir="." includes="testng.xml"/>
+				</testng>
+	</target>
+
+
+	<target name="runTestInstrumented" depends="war">
+		
+		<testng classpathref="classpath.test">
+		
+			<classpath location="${instrumented.dir}" />
+			<classpath location="${classes.dir}" />
+			<classpath refid="cobertura.classpath" />		
+			<xmlfileset dir="." includes="testng.xml"/>
+		</testng>
+	</target>
+
+	
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<path id="testNGRun">
+			<pathelement location="/Users/pavang/Documents/workspace/JenkinsDemo/testng-6.8.jar"/>
+			<pathelement location="/Users/pavang/Documents/workspace/JenkinsDemo/build" />
+	</path>
+			
+    <taskdef name="testng" classpathref="testNGRun" classname="org.testng.TestNGAntTask" />   
+    
+     <taskdef name="testng" classname="org.testng.TestNGAntTask">
+	    <classpath>
+	      <pathelement location="lib/testng/testng-5.14.7.jar"/>
+	    </classpath>
+	  </taskdef>
+	  
+	  
+	  <taskdef name="testngtasks" resource="testngtasks" >
+	     <classpath>
+	          <pathelement path="/Users/
+	          pavang/Documents/workspace/JenkinsDemo/testng.jar"/>
+	     </classpath>
+	</taskdef>
+	
+	
+	<fileset dir="lib">
+	    <include name="**/*.jar"/>
+	</fileset>
+
+    <path id="classpath.test">
+        <pathelement path="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/"/>
+        <pathelement path="${toString:testng.classpath}" />                      
+	    <pathelement path="/Users/pavang/Documents/workspace/JenkinsDemo/testng.jar"/>
+	    <pathelement path="${classes.dir}"/> 
+    	
+    </path>
+		<taskdef resource="testngtasks" classpath="testng.jar"/> 
+	    <pathelement location="/Users/pavang/Downloads/jcommander-1.13.jar"/>
+	
+	
+	<taskdef name="jcommander" classname="com.beust.jcommander.ParameterException">
+		    <classpath>
+		      <pathelement location="/Users/pavang/Documents/workspace/JenkinsDemo/lib/jcommander.jar"/> 
+		    </classpath>
+	</taskdef>
+		      <path refid="classpath.base" />
+	
+-->

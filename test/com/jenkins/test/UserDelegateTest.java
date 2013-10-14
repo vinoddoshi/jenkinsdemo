@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.jenkins.demo.UserDelegate;
 
+
 public class UserDelegateTest {
   
   UserDelegate ud = new UserDelegate();
@@ -44,8 +45,8 @@ public class UserDelegateTest {
     Assert.assertTrue(ud.usersList.get(0).getCountry().equals("India"));
   }
   
-  @Test 
-  public void anotherTest(){
+  //@Test 
+ // public void anotherTest(){
     
 //    UserDelegate ud1 = new UserDelegate();
 //    ud1.usersList.clear();
@@ -53,5 +54,5 @@ public class UserDelegateTest {
 //    ud1.usersList.remove(0);
 //    System.out.println(ud1.usersList.isEmpty());
    // Assert.assertTrue(ud1.usersList.isEmpty());
-  }  
+  //}  
 }

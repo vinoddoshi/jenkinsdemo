@@ -2,40 +2,28 @@
 <testng-results skipped="0" failed="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="JenkinsDemo" duration-ms="11989" started-at="2013-10-12T14:15:56Z" finished-at="2013-10-12T14:16:08Z">
+  <suite name="JenkinsDemo" duration-ms="16" started-at="2013-10-14T05:47:12Z" finished-at="2013-10-14T05:47:12Z">
     <groups>
     </groups>
-    <test name="Registration" duration-ms="11" started-at="2013-10-12T14:15:56Z" finished-at="2013-10-12T14:15:56Z">
+    <test name="Registration" duration-ms="16" started-at="2013-10-14T05:47:12Z" finished-at="2013-10-14T05:47:12Z">
       <class name="com.jenkins.test.UserDelegateTest">
-        <test-method status="PASS" signature="anotherTest()[pri:0, instance:com.jenkins.test.UserDelegateTest@142eda55]" name="anotherTest" duration-ms="4" started-at="2013-10-12T19:45:56Z" finished-at="2013-10-12T19:45:56Z">
+        <test-method status="PASS" signature="saveUserCountry()[pri:0, instance:com.jenkins.test.UserDelegateTest@41d26b41]" name="saveUserCountry" duration-ms="6" started-at="2013-10-14T11:17:12Z" finished-at="2013-10-14T11:17:12Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- anotherTest -->
+        </test-method> <!-- saveUserCountry -->
+        <test-method status="PASS" signature="saveUserNameTest()[pri:0, instance:com.jenkins.test.UserDelegateTest@41d26b41]" name="saveUserNameTest" duration-ms="1" started-at="2013-10-14T11:17:12Z" finished-at="2013-10-14T11:17:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveUserNameTest -->
+        <test-method status="PASS" signature="saveUserEmailID()[pri:0, instance:com.jenkins.test.UserDelegateTest@41d26b41]" name="saveUserEmailID" duration-ms="0" started-at="2013-10-14T11:17:12Z" finished-at="2013-10-14T11:17:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveUserEmailID -->
+        <test-method status="PASS" signature="saveUserPhoneNoTest()[pri:0, instance:com.jenkins.test.UserDelegateTest@41d26b41]" name="saveUserPhoneNoTest" duration-ms="0" started-at="2013-10-14T11:17:12Z" finished-at="2013-10-14T11:17:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveUserPhoneNoTest -->
       </class> <!-- com.jenkins.test.UserDelegateTest -->
     </test> <!-- Registration -->
-    <test name="SeleniumTests" duration-ms="11964" started-at="2013-10-12T14:15:56Z" finished-at="2013-10-12T14:16:08Z">
-      <class name="com.jenkins.guiTest.Index">
-        <test-method status="PASS" signature="init()[pri:0, instance:com.jenkins.guiTest.Index@76744438]" name="init" is-config="true" duration-ms="511" started-at="2013-10-12T19:45:56Z" finished-at="2013-10-12T19:45:57Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- init -->
-        <test-method status="PASS" signature="fillForm()[pri:0, instance:com.jenkins.guiTest.Index@76744438]" name="fillForm" duration-ms="261" started-at="2013-10-12T19:45:57Z" finished-at="2013-10-12T19:45:57Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- fillForm -->
-        <test-method status="PASS" signature="selectCountry()[pri:0, instance:com.jenkins.guiTest.Index@76744438]" name="selectCountry" duration-ms="45" started-at="2013-10-12T19:45:57Z" finished-at="2013-10-12T19:45:57Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- selectCountry -->
-        <test-method status="PASS" signature="submitForm()[pri:0, instance:com.jenkins.guiTest.Index@76744438]" name="submitForm" duration-ms="977" started-at="2013-10-12T19:45:57Z" finished-at="2013-10-12T19:45:58Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- submitForm -->
-        <test-method status="PASS" signature="exit()[pri:0, instance:com.jenkins.guiTest.Index@76744438]" name="exit" is-config="true" duration-ms="10165" started-at="2013-10-12T19:45:58Z" finished-at="2013-10-12T19:46:08Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- exit -->
-      </class> <!-- com.jenkins.guiTest.Index -->
-    </test> <!-- SeleniumTests -->
   </suite> <!-- JenkinsDemo -->
 </testng-results>

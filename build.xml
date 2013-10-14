@@ -1,6 +1,8 @@
 <?xml version="1.0" ?> 
 <project name="JenkinsDemo" default="war">
 
+	<property file="build.properties" />
+	
 	<path id="classpath.test">
 	       <fileset dir="lib">
 	         <include name="SeleniumJars/*.jar" />
@@ -12,14 +14,21 @@
 
 	</path>
 
-	
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura*.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+				
 	<taskdef name="testng" classname="org.testng.TestNGAntTask">
 		    <classpath>
 		      <pathelement location="/home/vinod_doshi/jenkins_demo/JenkinsDemo/testng-6.8.jar"/> 
 		    </classpath>
 	</taskdef>
 	
-
+	 <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+	
 <!-- _________________________________________________________________________________ -->	 
 	
 
@@ -35,6 +44,36 @@
 		</javac>
 	</target>
 	
+	<target name="instrument" depends="init,compile">
+			<!--
+				Remove the coverage data file and any old instrumentation.
+			-->
+			<delete file="cobertura.ser"/>
+			<delete dir="${instrumented.dir}" />
+
+			<!--
+				Instrument the application classes, writing the
+				instrumented classes into ${build.instrumented.dir}.
+			-->
+			<cobertura-instrument todir="${instrumented.dir}">
+				<!--
+					The following line causes instrument to ignore any
+					source line containing a reference to log4j, for the
+					purposes of coverage reporting.
+				-->
+				<ignore regex="org.apache.log4j.*" />
+
+				<fileset dir="${classes.dir}">
+					<!--
+						Instrument all the application classes, but
+						don't instrument the test classes.
+					-->
+					<include name="**/*.class" />
+					<exclude name="**/*Test.class" />
+				</fileset>
+			</cobertura-instrument>
+		</target>
+
 	<target name="war" depends="compile">
 		<war destfile="dist/JenkinsDemo.war" needxmlfile='false'>
 			<fileset dir="WebContent"/>
@@ -54,6 +93,37 @@
 					<xmlfileset dir="." includes="testng.xml"/>
 				</testng>
 	</target>
+
+
+	<target name="runTestInstrumented" depends="war">
+		
+		<testng classpathref="classpath.test">
+		
+			<classpath location="${instrumented.dir}" />
+			<classpath location="${classes.dir}" />
+			<classpath refid="cobertura.classpath" />		
+			<xmlfileset dir="." includes="testng.xml"/>
+		</testng>
+	</target>
+
+	<target name="xml_report" depends="runTestInstrumented">
+	   <cobertura-report format="xml"
+	                     destdir="${coverage.xml.dir}"
+	                     maxmemory="512M">
+	      <fileset dir="${src.dir}">
+	         <include name="**/*.java" />
+	      </fileset>
+	   </cobertura-report>
+	</target>
+	
+	<target name="summary-coverage-report" depends="xml_report">
+		<!--
+			Generate an summary XML file containing the coverage data using
+			the "srcdir" attribute.
+		-->
+		<cobertura-report srcdir="${src.dir}" destdir="${coverage.summaryxml.dir}" format="summaryXml" />
+	</target>
+
 
 </project>
 
